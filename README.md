@@ -1,20 +1,94 @@
 # horde-deployment
 A composer deployed horde suite
 
-Versions:
+Versions (git branches):
 
-- master    A Horde Base setup (development master versions)
-- FRAMEWORK_6_0 A Horde Base with versioned/tagged releases to the FRAMEWORK_6 branch (currently alpha)
-- FRAMEWORK_6_0_GROUPWARE A setup with with versioned/tagged releases. (currently alpha) Contains ansel (photo), content (tagger), imp (webmail), ingo (mail filters), kronolith (calendar), mnemo (notes), nag (tasks), passwd (password changing), timeobjects (misc data sources), turba (contacts)
+- master    			A Horde Base setup (development master versions)
+- FRAMEWORK_6_0 		A Horde Base with versioned/tagged releases to the FRAMEWORK_6 branch (currently alpha)
+- FRAMEWORK_6_0_GROUPWARE 	A setup with with versioned/tagged releases. (currently alpha) Contains ansel (photo), content (tagger), imp (webmail), ingo (mail filters), kronolith (calendar), mnemo (notes), nag (tasks), passwd (password changing), timeobjects (misc data sources), turba (contacts)
 
 
 
 ## usage
 
 ```
-git clone https://github.com/maintaina-com/horde-deployment.git horde
-cd horde
-composer install
+
+yourbox:/somdir # mkdir test
+yourbox:/somdir # cd test
+# get composer
+
+yourbox:/somdir/test # php -r "copy('https://getcomposer.org/installer',
+'composer-setup.php');"
+yourbox:/somdir/test # php -r "if (hash_file('sha384',
+'composer-setup.php') ===
+'756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3')
+{ echo 'Installer verified'; } else { echo 'Installer corrupt';
+unlink('composer-setup.php'); } echo PHP_EOL;"
+Installer verified
+yourbox:/somdir/test # php composer-setup.php
+All settings correct for using Composer
+Downloading...
+
+Composer (version 2.0.11) successfully installed to: /srv/test/composer.phar
+Use it: php composer.phar
+
+yourbox:/somdir/test # php -r "unlink('composer-setup.php');"
+yourbox:/somdir/test #
+
+```
+
+## get the horde deployment project
+
+```
+yourbox:/somdir/test # git clone https://github.com/maintaina-com/horde-deployment.git -b FRAMEWORK_6_0
+yourbox:/somdir/test # cd horde-deployment/
+yourbox:/somdir/test/horde-deployment # ../composer.phar install
+
+No lock file found. Updating dependencies instead of installing from
+lock file. Use composer update over composer install if you do not have
+a lock file.
+
+Loading composer repositories with package information
+Updating dependencies
+Lock file operations: 111 installs, 0 updates, 0 removals
+  - Locking doctrine/instantiator (1.4.0)
+  - Locking horde/alarm (v3.0.0alpha3)
+  - Locking horde/argv (v3.0.0alpha3)
+  - Locking horde/auth (v3.0.0alpha4)
+...
+  - Installing horde/test (v3.0.0alpha2): Extracting archive
+  - Installing pear/console_color2 (0.1.2): Extracting archive
+  - Installing pear/console_table (v1.3.1): Extracting archive
+80 package suggestions were added by new dependencies, use `composer
+suggest` to see details.
+Generating autoload files
+27 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+
+```
+## Install IMP,  turba
+
+```
+yourbox:/somdir/test/horde-deployment # ../composer.phar require horde/imp dev-FRAMEWORK_6_0 horde/turba dev-FRAMEWORK_6_0
+./composer.json has been updated
+Running composer update horde/imp horde/turba
+Loading composer repositories with package information
+Updating dependencies
+Lock file operations: 13 installs, 0 updates, 0 removals
+  - Locking horde/content (v3.0.0alpha3)
+  - Locking horde/crypt (v3.0.0alpha3)
+  - Locking horde/editor (v3.0.0alpha3)
+...
+  - Installing horde/rdo (v3.0.0alpha3): Extracting archive
+  - Installing horde/content (v3.0.0alpha3): Extracting archive
+  - Installing horde/turba (dev-FRAMEWORK_6_0 1f54cdc): Cloning
+1f54cdcb2f from cache
+13 package suggestions were added by new dependencies, use `composer
+suggest` to see details.
+Generating autoload files
+27 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+
 ```
 Then copy the main horde config file to
 point your web server root to the web/ subdir
