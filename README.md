@@ -6,7 +6,9 @@ Versions (git branches):
 ```
 master    			A Horde Base setup (development master versions)
 FRAMEWORK_6_0 			A Horde Base with versioned/tagged releases to the FRAMEWORK_6 branch (currently alpha)
-FRAMEWORK_6_0_GROUPWARE 	A setup with with versioned/tagged releases. (currently alpha) Contains ansel (photo), content (tagger), imp (webmail), ingo (mail filters), kronolith (calendar), mnemo (notes), nag (tasks), passwd (password changing), timeobjects (misc data sources), turba (contacts)
+FRAMEWORK_6_0_GROUPWARE 	A setup with with versioned/tagged releases. (currently alpha) Contains ansel (photo), 
+				content (tagger), imp (webmail), ingo (mail filters), kronolith (calendar), mnemo (notes), 
+				nag (tasks), passwd (password changing), timeobjects (misc data sources), turba (contacts)
 
 ```
 
@@ -18,7 +20,7 @@ yourbox:/srvdir # mkdir test
 yourbox:/srvdir # cd test
 ```
 
-# Install latest version of composer
+## Install latest version of composer
 
 ```
 yourbox:/srvdir/test # php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -78,7 +80,7 @@ Updating dependencies
 Lock file operations: 13 installs, 0 updates, 0 removals
   - Locking horde/content (v3.0.0alpha3)
   - Locking horde/crypt (v3.0.0alpha3)
-  R- Locking horde/editor (v3.0.0alpha3)
+  - Locking horde/editor (v3.0.0alpha3)
 ...
   - Installing horde/rdo (v3.0.0alpha3): Extracting archive
   - Installing horde/content (v3.0.0alpha3): Extracting archive
