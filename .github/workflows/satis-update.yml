@@ -40,7 +40,7 @@ jobs:
       - name: Generate package list and Satis repository website
         run: |
           composer create-project composer/satis:dev-main
-          wget https://github.com/maintaina-com/horde-satis.maintaina.com/blob/master/bin/satis.json
+          wget https://raw.githubusercontent.com/maintaina-com/horde-satis.maintaina.com/master/bin/satis.json
           ls -lah
           php satis/bin/satis build satis.json build/output
       # deploy the website to gh-pages branch of a separate repository
