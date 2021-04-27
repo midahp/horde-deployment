@@ -1,0 +1,55 @@
+---
+name: Update satis repo on push
+
+on:
+  push:
+    branches:
+      - master
+    # do not run the workflow when documentation was changed
+    paths-ignore:
+      - docs/*
+      - README.md
+      - LICENSE
+
+jobs:
+  # build the website and deploy it to gh-pages branch of a separate repository
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      # prepare cache key
+      - name: Get Date
+        id: get-date
+        run: |
+          echo "::set-output name=date::$(/bin/date -u "+%F")"
+        shell: bash
+      - name: Setup github ssh key
+        run:  mkdir -p ~/.ssh/ && ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          tools: composer:v2
+          php-version: '7.4'
+        env:
+          COMPOSER_TOKEN: ${{ secrets.PHPDOC_TOKEN }}
+ 
+      - name: Setup Github Token as composer credential
+        run: composer config -g github-oauth.github.com ${{ secrets.PHPDOC_TOKEN}}
+
+      # generate the package list and the Satis repo website
+      - name: Generate package list and Satis repository website
+        run: |
+          composer create-project composer/satis:dev-main
+          wget https://github.com/maintaina-com/horde-satis.maintaina.com/blob/master/bin/satis.json
+          bin/satis build satis.json build/output
+      # deploy the website to gh-pages branch of a separate repository
+      - name: Deploy Satis Website
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          repo: maintaina-com/maintaina-com.github.io
+          target_branch: master
+          build_dir: build/output/
+          keep_history: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.SATIS_DEPLOY_PAT }}
