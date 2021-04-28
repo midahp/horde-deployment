@@ -46,7 +46,7 @@ jobs:
       - name: Deploy Satis Website
         uses: crazy-max/ghaction-github-pages@v2
         with:
-          repo: https://github.com/maintaina-com/maintaina-com.github.io
+          repo: maintaina-com/maintaina-com.github.io
           target_branch: master
           build_dir: build/output/
           keep_history: true
