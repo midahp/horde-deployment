@@ -3,7 +3,7 @@
     "description": "A base project for a horde installation",
     "type": "project",
     "repositories": {
-        "0": {
+        "maintaina": {
             "url": "https://horde-satis.maintaina.com",
             "type": "composer"
         }
