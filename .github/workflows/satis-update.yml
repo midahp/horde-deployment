@@ -32,16 +32,20 @@ jobs:
           php-version: '7.4'
         env:
           COMPOSER_TOKEN: ${{ secrets.PHPDOC_TOKEN }}
- 
+
       - name: Setup Github Token as composer credential
         run: composer config -g github-oauth.github.com ${{ secrets.PHPDOC_TOKEN}}
 
       # generate the package list and the Satis repo website
+      - name: Clone existing repo
+        run: |
+          mkdir -p build/output
+          git clone https://github.com/maintaina-com/maintaina-com.github.io build/output
       - name: Generate package list and Satis repository website
         run: |
           composer create-project composer/satis:dev-main
           wget https://raw.githubusercontent.com/maintaina-com/horde-satis.maintaina.com/master/bin/satis.json
-          php satis/bin/satis build --repository-url https://github.com/maintaina-com/horde-deployment satis.json build/output
+          php satis/bin/satis build --repository-url https://github.com/maintaina-com/horde-deployment satis.json build/output maintaina-com/horde-deployment
       # deploy the website to gh-pages branch of a separate repository
       - name: Deploy Satis Website
         uses: crazy-max/ghaction-github-pages@v2
