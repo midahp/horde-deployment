@@ -45,7 +45,7 @@ jobs:
         run: |
           composer create-project composer/satis:dev-main
           wget https://raw.githubusercontent.com/maintaina-com/horde-satis.maintaina.com/master/bin/satis.json
-          php satis/bin/satis build --repository-url https://github.com/maintaina-com/horde-deployment satis.json build/output maintaina-com/horde-deployment
+          php satis/bin/satis build --repository-url https://github.com/maintaina-com/horde-deployment satis.json build/output
       # deploy the website to gh-pages branch of a separate repository
       - name: Deploy Satis Website
         uses: crazy-max/ghaction-github-pages@v2
